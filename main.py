@@ -116,6 +116,9 @@ div.stButton > button:first-child {
     background-color: #2e9aff;
     border-color: #2e9aff;
 }
+header.css-1avcm0n, section {
+	background-color: rgba(89, 55, 146, 0.8);
+}
 </style>""", unsafe_allow_html=True)
 
 
