@@ -113,9 +113,9 @@ html, body, [class*="css"]  {
 	background-color: rgba(89, 55, 146, 0.8);
 	text-color: "#ffffff";
 }
-div.stButton  > button:first-child {
-    background-color: "rgb(46, 154, 255)";
-    border-color: "rgb(46, 154, 255)";
+div.stButton > button:first-child {
+    background-color: #2e9aff;
+    border-color: #2e9aff;
 }
 </style>""", unsafe_allow_html=True)
 
