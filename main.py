@@ -111,13 +111,14 @@ m = st.markdown("""
 html, body, [class*="css"]  {
 	font-family: 'Nunito', sans-serif; 
 	text-color: "#ffffff";
+	background-color: rgba(89, 55, 146, 0.8);
 }
-div.stButton > button:first-child {
+button {
     background-color: #2e9aff;
     border-color: #2e9aff;
 }
-html {
-	background-color: rgba(89, 55, 146, 0.8);
+input {
+	background-color: "rgb(136, 114, 163)";
 }
 </style>""", unsafe_allow_html=True)
 
