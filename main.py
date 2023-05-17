@@ -114,7 +114,7 @@ html, body, [class*="css"]  {
 	text-color: "#ffffff";
 }
 div.stButton  {
-    background-color: #2e9aff;
+    accent-color: #2e9aff;
     border-color: #2e9aff;
 }
 </style>""", unsafe_allow_html=True)
