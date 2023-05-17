@@ -49,7 +49,7 @@ def fun():
 				else:
 					double += 1
 					work = w
-		if double == 0 && double_inprova == 0:
+		if double == 0 and double_inprova == 0:
 			st.error('Nessuna risorsa trovata con questo nome/cognome')
 		if double > 1:
 			st.warning('Sono state trovate più risorse con questo nome/cognome, cerca di essre più specifico.')
