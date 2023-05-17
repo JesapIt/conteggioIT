@@ -35,51 +35,75 @@ sht = client.open_by_url(link_it)
 def fun():
 	st.session_state.multi = []
 	if nome != '':
+		if not temp_att:
+			st.warning('Inserire almeno un\'attività')
+			return
 		double = 0
 		for w in sht.worksheets():
 			lower_title = w.title.lower()
 			lower_name = nome.lower()
 			if lower_name in lower_title:
+				if in_prova and (lower_title.find("socio in prova") < 0):
+					st.error('Non è stata trovata nessuna risorsa corrispondente ai criteri di ricerca')
+					return
+				elif (not in_prova) and (lower_title.find("socio in prova") >= 0): 
+					st.error('Non è stata trovata nessuna risorsa corrispondente ai criteri di ricerca')
+					return
 				double +=1
 				current_work = w
 		if double == 0:
 			st.error('Nessuna risorsa trovata con questo nome/cognome')
-
-		elif double > 1:
-			st.warning('Sono state trovate più risorse con questo nome/cognome, cerca di essre più specifico')
+		if double > 1:
+			st.warning('Sono state trovate più risorse con questo nome/cognome, cerca di essre più specifico.')
 		else:
+			
 		# --- adding elements to google sheet ---
-			def next_available_row(worksheet):
-				str_list = list(filter(None, worksheet.col_values(1)))
-				return str(len(str_list)+1)
+			def next_available_row(worksheet): #funzione
+				str_list = list(filter(None, worksheet.col_values(1))) #fa la lista delle colonne del worksheet scegliendo un elemento non vuoto
+				return str(len(str_list)+1) #va a prendere il prossimo elemento, che sarà vuoto
 
 			for a in temp_att:
 				row = next_available_row(current_work)
+				if int(row) > (len(current_work.get_all_values())-1):
+					current_work.append_row(["", "", ""])
 				c1 = Cell(int(row) , 1, str(data))
 				c2 = Cell(int(row) , 2, a)
 				c3 = Cell(int(row) , 3, str(dictionary[a]).replace(':', '.'))
 				current_work.update_cells([c1,c2,c3], value_input_option='USER_ENTERED')
-				#current_work.update_cell(row , 1, str(data))
-				#current_work.update_cell(row , 2, a)
-				#current_work.update_cell(row , 3, str(dictionary[a]).replace(':', '.'))
 
 			st.success(f'Conteggio ore di {current_work.title} aggiornato')
+	else:
+		st.warning('Inserire un nome e/o cognome')
 	return
 
 # --- Interfaccia ----
-nome = st.text_input('Nome e/o Cognome')
-data = st.date_input('Data', value=date.today())
+nome = st.text_input('Nome e/o Cognome. Se Socio in prova, spunta la checkbox relativa')
+in_prova = st.checkbox('Socio in Prova')
+data = st.date_input('Data', value=datetime.date.today())
 options = ['Call d\'area', 'Assemblea mensile', 'Delega', 'Recruiting', 'Mentoring', 'Progetto esterno'
 ,'Progetto interno', 'Formazione', 'Call con HR buddy', 'Organizzazione area', 'Task interno', 'Evento','Revisione Task', 'Board Resp/Resp Vice', 'Altro', 'Ricerca tools', 'Manutenzione app']
 att = st.multiselect('Attività', options, key="multi")
 dictionary = {}
 for a in att:
-	n_ore = st.time_input(f'Numero di ore {a}', datetime.time(1, 0), key=a)
+	n_ore = st.time_input(f'Numero di ore: {a}', datetime.time(1, 0), key=a, step=datetime.timedelta(minutes=5))
 	dictionary[a] = n_ore
-
 data = data.strftime("%d/%m/%Y")
 temp_att = att
-sub = st.button("Invia",on_click=fun)
+sub = st.button("Invia", on_click=fun)
+
+# Font: Nunito, colore bottone blu
+m = st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400&display=swap');
+html, body, [class*="css"]  {
+	font-family: 'Nunito', sans-serif; 
+}
+div.stButton > button:first-child {
+    background-color: #2e9aff;
+    border-color: #2e9aff;
+}
+</style>""", unsafe_allow_html=True)
+
 
 
 
