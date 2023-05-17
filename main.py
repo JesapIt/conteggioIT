@@ -53,9 +53,9 @@ def fun():
 		st.write(double)
 		if double == 0 and double_inprova == 0:
 			st.error('Nessuna risorsa trovata con questo nome/cognome')
-		if double > 1:
+		if double > 1 and (not in_prova):
 			st.warning('Sono state trovate più risorse con questo nome/cognome, cerca di essre più specifico.')
-		if double_inprova > 1:
+		if double_inprova > 1 and (in_prova):
 			st.warning('Sono state trovate più risorse in prova con questo nome/cognome, cerca di essre più specifico.')
 		else:
 			if in_prova and double_inprova == 0:
