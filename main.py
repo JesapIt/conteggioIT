@@ -119,7 +119,7 @@ div.stButton > button:first-child {
 input {
 	background-color: "rgb(136, 114, 163)";
 }
-header, section {
+header.css-1avcm0n, section {
 	background-color: rgba(89, 55, 146, 0.8);
 }
 </style>""", unsafe_allow_html=True)
