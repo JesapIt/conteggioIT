@@ -41,9 +41,13 @@ def fun():
 		double_inprova = 0
 		for w in sht.worksheets():
 			lower_title = w.title.lower()
+			index_inprova = lower_title.find("- socio in prova")
+			if (index_inprova >= 0):
+				lower_title = lower_title[0:index_inprova-1]
+			st.write(lower_title)
 			lower_name = nome.lower()
 			if lower_name in lower_title:
-				if (lower_title.find("socio in prova") >= 0):
+				if (index_inprova >= 0):
 					double_inprova += 1
 					work_inprova = w
 				else:
