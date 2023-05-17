@@ -55,6 +55,7 @@ def fun():
 					work = w
 		if double == 0 and double_inprova == 0:
 			st.error('Nessuna risorsa trovata con questo nome/cognome')
+			return
 		if double > 1 and (not in_prova):
 			st.warning('Sono state trovate più risorse con questo nome/cognome, cerca di essre più specifico.')
 			return
