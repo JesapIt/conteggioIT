@@ -56,10 +56,10 @@ def fun():
 		if double_inprova > 1:
 			st.warning('Sono state trovate più risorse in prova con questo nome/cognome, cerca di essre più specifico.')
 		else:
-			if in_prova and double_inprova == 0):
+			if in_prova and double_inprova == 0:
 				st.error('Non è stata trovata nessuna risorsa corrispondente ai criteri di ricerca')
 				return
-			elif (not in_prova) and double_inprova == 1): 
+			elif (not in_prova) and double_inprova == 1: 
 				st.error('Non è stata trovata nessuna risorsa corrispondente ai criteri di ricerca')
 				return
 			
