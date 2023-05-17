@@ -58,17 +58,18 @@ def fun():
 		if double_inprova > 1 and (in_prova):
 			st.warning('Sono state trovate più risorse in prova con questo nome/cognome, cerca di essre più specifico.')
 		else:
-			if in_prova and double_inprova == 0:
-				st.error('Non è stata trovata nessuna risorsa corrispondente ai criteri di ricerca')
-				return
-			elif (not in_prova) and double_inprova == 1: 
-				st.error('Non è stata trovata nessuna risorsa corrispondente ai criteri di ricerca')
-				return
-			
-			if double == 1:
-				current_work = work
-			else:
-				current_work = work_inprova
+			if in_prova: 
+				if double_inprova == 0:
+					st.error('Non è stata trovata nessuna risorsa corrispondente ai criteri di ricerca')
+					return
+				elif double_inprova == 1:
+					current_work = work_inprova
+			elif (not in_prova):
+				if double == 0:
+					st.error('Non è stata trovata nessuna risorsa corrispondente ai criteri di ricerca')
+					return
+				elif double == 1:
+					current_work = work
 		# --- adding elements to google sheet ---
 			def next_available_row(worksheet): #funzione
 				str_list = list(filter(None, worksheet.col_values(1))) #fa la lista delle colonne del worksheet scegliendo un elemento non vuoto
