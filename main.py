@@ -2,7 +2,6 @@ import streamlit as st
 from oauth2client.service_account import ServiceAccountCredentials
 import gspread
 from gspread import Cell
-from datetime import date
 import datetime
 from PIL import Image
 
