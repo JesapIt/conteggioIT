@@ -98,7 +98,7 @@ options = ['Call d\'area', 'Assemblea mensile', 'Delega', 'Recruiting', 'Mentori
 att = st.multiselect('Attività', options, key="multi")
 dictionary = {}
 for a in att:
-	n_ore = st.time_input(f'Numero di ore: {a}', datetime.time(1, 0), key=a, step=datetime.timedelta(minutes=5))
+	n_ore = st.time_input(f'Numero di ore: {a}', datetime.time(1, 0), key=a)
 	dictionary[a] = n_ore
 data = data.strftime("%d/%m/%Y")
 temp_att = att
@@ -115,6 +115,9 @@ html, body, [class*="css"]  {
 div.stButton > button:first-child {
     background-color: #2e9aff;
     border-color: #2e9aff;
+}
+header.css-1avcm0n, section {
+	background-color: rgba(89, 55, 146, 0.8);
 }
 </style>""", unsafe_allow_html=True)
 
