@@ -1,0 +1,15 @@
+[theme]
+
+
+# Background color per tutta la pagina
+backgroundColor = "rgba(89, 55, 146, 0.8)" #viola
+
+# Background color degli input
+secondaryBackgroundColor = "rgb(136, 114, 163)" #violetto
+
+# Color per checkbox e slider
+primaryColor = "rgb(136, 114, 163)" #blu
+
+# Font color 
+textColor = "#ffffff" # white
+
