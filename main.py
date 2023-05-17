@@ -113,7 +113,7 @@ html, body, [class*="css"]  {
 	background-color: rgba(89, 55, 146, 0.8);
 	text-color: "#ffffff";
 }
-div.stButton > button:first-child {
+div.stButton  {
     background-color: #2e9aff;
     border-color: #2e9aff;
 }
