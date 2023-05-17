@@ -110,12 +110,14 @@ m = st.markdown("""
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400&display=swap');
 html, body, [class*="css"]  {
 	font-family: 'Nunito', sans-serif; 
-	background-color: rgba(89, 55, 146, 0.8);
 	text-color: "#ffffff";
 }
 div.stButton > button:first-child {
     background-color: #2e9aff;
     border-color: #2e9aff;
+}
+body {
+	background-color: rgba(89, 55, 146, 0.8);
 }
 </style>""", unsafe_allow_html=True)
 
