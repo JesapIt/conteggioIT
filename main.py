@@ -26,8 +26,8 @@ client = gspread.authorize(creds)
 
 
 st.markdown('## Area IT')
-st.markdown('### [Link google sheet](https://docs.google.com/spreadsheets/d/1Czgxm1xwO6PYgPTOz2LDPoB6IiKtS0cMJobfAjqnZhQ/edit#gid=0)')
-link_it = "https://docs.google.com/spreadsheets/d/1Czgxm1xwO6PYgPTOz2LDPoB6IiKtS0cMJobfAjqnZhQ/edit#gid=0"
+st.markdown('### [Link google sheet](https://docs.google.com/spreadsheets/d/15JDHfCDNQnuLWK5AgZEl0oS91hDfAKFBxTlRTR2ZSX4/edit#gid=0)')
+link_it = "https://docs.google.com/spreadsheets/d/15JDHfCDNQnuLWK5AgZEl0oS91hDfAKFBxTlRTR2ZSX4/edit#gid=0"
 sht = client.open_by_url(link_it)
 
 # funzione al click del bottone
@@ -38,24 +38,35 @@ def fun():
 			st.warning('Inserire almeno un\'attività')
 			return
 		double = 0
+		double_inprova = 0
 		for w in sht.worksheets():
 			lower_title = w.title.lower()
 			lower_name = nome.lower()
 			if lower_name in lower_title:
-				if in_prova and (lower_title.find("socio in prova") < 0):
-					st.error('Non è stata trovata nessuna risorsa corrispondente ai criteri di ricerca')
-					return
-				elif (not in_prova) and (lower_title.find("socio in prova") >= 0): 
-					st.error('Non è stata trovata nessuna risorsa corrispondente ai criteri di ricerca')
-					return
-				double +=1
-				current_work = w
-		if double == 0:
+				if (lower_title.find("socio in prova") >= 0):
+					double_inprova += 1
+					work_inprova = w
+				else:
+					double += 1
+					work = w
+		if double == 0 && double_inprova == 0:
 			st.error('Nessuna risorsa trovata con questo nome/cognome')
 		if double > 1:
 			st.warning('Sono state trovate più risorse con questo nome/cognome, cerca di essre più specifico.')
+		if double_inprova > 1:
+			st.warning('Sono state trovate più risorse in prova con questo nome/cognome, cerca di essre più specifico.')
 		else:
+			if in_prova and double_inprova == 0):
+				st.error('Non è stata trovata nessuna risorsa corrispondente ai criteri di ricerca')
+				return
+			elif (not in_prova) and double_inprova == 1): 
+				st.error('Non è stata trovata nessuna risorsa corrispondente ai criteri di ricerca')
+				return
 			
+			if double == 1:
+				current_work = work
+			else:
+				current_work = work_inprova
 		# --- adding elements to google sheet ---
 			def next_available_row(worksheet): #funzione
 				str_list = list(filter(None, worksheet.col_values(1))) #fa la lista delle colonne del worksheet scegliendo un elemento non vuoto
