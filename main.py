@@ -116,9 +116,7 @@ div.stButton > button:first-child {
     background-color: #2e9aff;
     border-color: #2e9aff;
 }
-input [class*="st"] {
-	background-color: "rgb(136, 114, 163)";
-}
+
 header.css-1avcm0n, section {
 	background-color: rgba(89, 55, 146, 0.8);
 }
