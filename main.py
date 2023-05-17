@@ -49,8 +49,8 @@ def fun():
 				else:
 					double += 1
 					work = w
-		st.write("p " + double_inprova)
-		st.write("n " + double)
+		st.write(double_inprova)
+		st.write(double)
 		if double == 0 and double_inprova == 0:
 			st.error('Nessuna risorsa trovata con questo nome/cognome')
 		if double > 1:
