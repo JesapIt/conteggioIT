@@ -58,6 +58,7 @@ def fun():
 			return
 		if double_inprova > 1 and (in_prova):
 			st.warning('Sono state trovate più risorse in prova con questo nome/cognome, cerca di essre più specifico.')
+			return
 		else:
 			if in_prova: 
 				if double_inprova == 0:
