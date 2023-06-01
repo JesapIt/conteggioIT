@@ -117,11 +117,14 @@ html, body, [class*="css"]  {
 	text-color: "#ffffff";
 }
 div.stButton > button:first-child {
-    background-color: #2e9aff;
-    border-color: #2e9aff;
+    background-color: #7045b8;
+    border-color: #7045b8;
 }
 header.css-1avcm0n, section {
-	background-color: rgba(89, 55, 146, 0.8);
+	background-color: rgba(112, 69, 184, 0.4) !important;
+}
+.css-k7vsyb a {
+	color: rgb(192, 158, 204);
 }
 </style>""", unsafe_allow_html=True)
 
