@@ -30,6 +30,9 @@ st.markdown('### [Link google sheet](https://docs.google.com/spreadsheets/d/1Czg
 link_it = "https://docs.google.com/spreadsheets/d/1Czgxm1xwO6PYgPTOz2LDPoB6IiKtS0cMJobfAjqnZhQ/edit#gid=0"
 sht = client.open_by_url(link_it)
 
+
+
+
 # funzione al click del bottone
 def fun():
 	st.session_state.multi = []
@@ -100,12 +103,34 @@ data = st.date_input('Data', value=datetime.date.today())
 options = ['Call d\'area', 'Assemblea mensile', 'Delega', 'Recruiting', 'Mentoring', 'Progetto esterno'
 ,'Progetto interno', 'Formazione', 'Call con HR buddy', 'Organizzazione area', 'Task interno', 'Evento','Revisione Task', 'Board Resp/Resp Vice', 'Altro', 'Ricerca tools', 'Manutenzione app', 'Case study']
 att = st.multiselect('Attività', options, key="multi")
+temp_att = []
 dictionary = {}
 for a in att:
-	n_ore = st.time_input(f'Numero di ore: {a}', datetime.time(1, 0), key=a)
-	dictionary[a] = n_ore
+	if a == "Progetto esterno":
+		### estrazione nomi progetti in corso
+		prog_link = "https://docs.google.com/spreadsheets/d/1-bXwTiVfxFYbFKHCeJyocKIKCQsn0ZIK4Kq7Q8A9ND8/edit#gid=387523138"
+		prog_spread_sht = client.open_by_url(prog_link)
+		prog_sht = prog_spread_sht.get_worksheet(1)
+
+		column_b = prog_sht.col_values(2)  # Column B is index 2
+		column_d = prog_sht.col_values(4)  # Column D is index 4
+
+		progetti_in_corso = []
+		for name, value in zip(column_b, column_d):
+			if value.lower() == 'in corso':
+				progetti_in_corso.append(name)
+		### fine estrazione
+		sel_prog = st.selectbox("Selezionare il progetto", progetti_in_corso)
+		if sel_prog:
+			temp_att.append('Progetto esterno - ' + sel_prog)
+			n_ore = st.time_input(f'Numero di ore: {sel_prog}', datetime.time(1, 0), key=sel_prog+'1')
+			dictionary['Progetto esterno - ' + sel_prog] = n_ore
+
+	else:
+		temp_att.append(a)
+		n_ore = st.time_input(f'Numero di ore: {a}', datetime.time(1, 0), key=a)
+		dictionary[a] = n_ore
 data = data.strftime("%d/%m/%Y")
-temp_att = att
 sub = st.button("Invia", on_click=fun)
 
 # Font: Nunito, colore bottone blu
