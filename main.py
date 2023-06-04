@@ -118,8 +118,8 @@ for a in att:
 
 		progetti_in_corso = []
 		for name, value, state in zip(column_b, column_d, column_e):
-    		if value.lower() == 'in corso' and state.lower() == 'progetto esterno':
-        	progetti_in_corso.append(name)
+			if value.lower() == 'in corso' and state.lower() == 'progetto esterno':
+				progetti_in_corso.append(name)
 		### fine estrazione
 		sel_prog = st.selectbox("Selezionare il progetto", progetti_in_corso)
 		if sel_prog:
