@@ -114,11 +114,12 @@ for a in att:
 
 		column_b = prog_sht.col_values(2)  # Column B is index 2
 		column_d = prog_sht.col_values(4)  # Column D is index 4
+		column_e = prog_sht.col_values(5)
 
 		progetti_in_corso = []
-		for name, value in zip(column_b, column_d):
-			if value.lower() == 'in corso':
-				progetti_in_corso.append(name)
+		for name, value, state in zip(column_b, column_d, column_e):
+    		if value.lower() == 'in corso' and state.lower() == 'progetto esterno':
+        	progetti_in_corso.append(name)
 		### fine estrazione
 		sel_prog = st.selectbox("Selezionare il progetto", progetti_in_corso)
 		if sel_prog:
