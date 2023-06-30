@@ -110,7 +110,7 @@ for a in att:
 		### estrazione nomi progetti in corso
 		prog_link = "https://docs.google.com/spreadsheets/d/1-bXwTiVfxFYbFKHCeJyocKIKCQsn0ZIK4Kq7Q8A9ND8/edit#gid=1224600023"
 		prog_spread_sht = client.open_by_url(prog_link)
-		prog_sht = prog_spread_sht.get_worksheet(7)
+		prog_sht = prog_spread_sht.get_worksheet(1)
 
 		column_b = prog_sht.col_values(2)  # Column B is index 2
 		column_d = prog_sht.col_values(4)  # Column D is index 4
