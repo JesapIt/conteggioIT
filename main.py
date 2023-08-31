@@ -108,13 +108,13 @@ dictionary = {}
 for a in att:
 	if a == "Progetto esterno":
 		### estrazione nomi progetti in corso
-		prog_link = "https://docs.google.com/spreadsheets/d/1-bXwTiVfxFYbFKHCeJyocKIKCQsn0ZIK4Kq7Q8A9ND8/edit#gid=1224600023"
+		prog_link = "https://docs.google.com/spreadsheets/d/1kaiBTPxp-o0IVn1j54QGuPJOeYdHxJ9Iqg30QwYqnGI/edit#gid=1965451645"
 		prog_spread_sht = client.open_by_url(prog_link)
 		prog_sht = prog_spread_sht.get_worksheet(1)
 
-		column_b = prog_sht.col_values(2)  # Column B is index 2
-		column_d = prog_sht.col_values(4)  # Column D is index 4
-		column_e = prog_sht.col_values(5)
+		column_b = prog_sht.col_values(1)  # Column B (poi diventata colonna A con nuovo foglio) is index 1
+		column_d = prog_sht.col_values(3)  # Column D (poi diventata colonna C con nuovo foglio) is index 3
+		column_e = prog_sht.col_values(4)
 
 		progetti_in_corso = []
 		for name, value, state in zip(column_b, column_d, column_e):
@@ -153,9 +153,3 @@ header.css-1avcm0n, section {
 	color: rgb(192, 158, 204);
 }
 </style>""", unsafe_allow_html=True)
-
-
-
-
-
-
