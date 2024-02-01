@@ -43,7 +43,7 @@ def fun():
 			return
 		double = 0
 		double_inprova = 0
-		for w in sht.worksheets():
+		for w in sht.worksheets(): #ricerca nomi sia dei soci in prova che dei soci ordinari
 			lower_title = w.title.lower()
 			index_inprova = lower_title.find("- socio in prova")
 			if (index_inprova >= 0):
