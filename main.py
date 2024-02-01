@@ -8,7 +8,7 @@ from PIL import Image
 
 
 image = Image.open('jesap.png')
-
+#configurazione pagina: icona, titolo della pagina
 st.set_page_config(page_title='Conteggio Ore', page_icon = image, initial_sidebar_state = 'auto')
 hide_streamlit_style = """
             <style>
@@ -18,13 +18,14 @@ hide_streamlit_style = """
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
+#uso gspread per scrivere su google sheets e leggere da questo
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive',
          'https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/spreadsheets']
 
 creds = ServiceAccountCredentials.from_json_keyfile_name('key_conteggio.json', scope)
 client = gspread.authorize(creds)
 
-
+#collegamento alla pagina dove verranno segnate le ore
 st.markdown('## Area IT')
 st.markdown('### [Link google sheet](https://docs.google.com/spreadsheets/d/1Czgxm1xwO6PYgPTOz2LDPoB6IiKtS0cMJobfAjqnZhQ/edit#gid=0)')
 link_it = "https://docs.google.com/spreadsheets/d/1Czgxm1xwO6PYgPTOz2LDPoB6IiKtS0cMJobfAjqnZhQ/edit#gid=0"
@@ -84,7 +85,7 @@ def fun():
 
 			for a in temp_att:
 				row = next_available_row(current_work)
-				if int(row) > (len(current_work.get_all_values())-1):
+				if int(row) > (len(current_work.get_all_values())-1): #scrittura delle ore, nella prima colonna sarà scritto il giorno, nella seconda l'attività e nella terza le ore lavorate
 					current_work.append_row(["", "", ""])
 				c1 = Cell(int(row) , 1, str(data))
 				c2 = Cell(int(row) , 2, a)
@@ -107,42 +108,42 @@ temp_att = []
 dictionary = {}
 for a in att:
 	### estrazione nomi progetti in corso
-	prog_link = "https://docs.google.com/spreadsheets/d/1kaiBTPxp-o0IVn1j54QGuPJOeYdHxJ9Iqg30QwYqnGI/edit#gid=1965451645"
+	prog_link = "https://docs.google.com/spreadsheets/d/1kaiBTPxp-o0IVn1j54QGuPJOeYdHxJ9Iqg30QwYqnGI/edit#gid=1965451645" #link al google sheets dove vengono presi progetti interni ed esterni in corso
 	prog_spread_sht = client.open_by_url(prog_link)
-	prog_sht = prog_spread_sht.get_worksheet(1)
+	prog_sht = prog_spread_sht.get_worksheet(1) #prende il secondo foglio
 
-	column_b = prog_sht.col_values(1)  # Column B (poi diventata colonna A con nuovo foglio) is index 1
-	column_d = prog_sht.col_values(3)  # Column D (poi diventata colonna C con nuovo foglio) is index 3
-	column_e = prog_sht.col_values(4)
+	column_b = prog_sht.col_values(1)  #prende il nome del progetto
+	column_d = prog_sht.col_values(3)  #prende lo stato del progetto (il foglio a cui si appoggia già ha solamente i porgetti in corso ma è stato ritenuto necessario fare un doppio controllo)
+	column_e = prog_sht.col_values(4)  #progetto esterno o progetto interno
 
-	if a == "Progetto esterno":
+	if a == "Progetto esterno": #ESTRAZIONE PROGETTI ESTERNI
 
 		progetti_in_corso = []
 		for name, value, state in zip(column_b, column_d, column_e):
 			if value.lower() == 'in corso' and state.lower() == 'progetto esterno':
 				progetti_in_corso.append(name)
-		### fine estrazione
-		sel_prog = st.selectbox("Selezionare il progetto", progetti_in_corso)
+
+		sel_prog = st.selectbox("Selezionare il progetto", progetti_in_corso) #Creo con i progetti esterni la selectbox nell'interfaccia
 		if sel_prog:
 			temp_att.append('Progetto esterno - ' + sel_prog)
 			n_ore = st.time_input(f'Numero di ore: {sel_prog}', datetime.time(1, 0), key=sel_prog+'1')
 			dictionary['Progetto esterno - ' + sel_prog] = n_ore
 
 
-	elif a == "Progetto interno":
+	elif a == "Progetto interno": #ESTRAZIONE PROGETTI INTERNI
 
 		progetti_in_corso = []
 		for name, value, state in zip(column_b, column_d, column_e):
 			if value.lower() == 'in corso' and state.lower() == 'progetto interno':
 				progetti_in_corso.append(name)
 		### fine estrazione
-		sel_prog = st.selectbox("Selezionare il progetto", progetti_in_corso)
+		sel_prog = st.selectbox("Selezionare il progetto", progetti_in_corso) #Creo con i progetti interni la selectbox nell'interfaccia
 		if sel_prog:
 			temp_att.append('Progetto interno - ' + sel_prog)
 			n_ore = st.time_input(f'Numero di ore: {sel_prog}', datetime.time(1, 0), key=sel_prog+'1')
 			dictionary['Progetto interno - ' + sel_prog] = n_ore
 	
-	else:
+	else: #PER TUTTE LE ALTRE ATTIVITA
 		temp_att.append(a)
 		n_ore = st.time_input(f'Numero di ore: {a}', datetime.time(1, 0), key=a)
 		dictionary[a] = n_ore
